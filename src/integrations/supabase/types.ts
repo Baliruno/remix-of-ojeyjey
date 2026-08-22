@@ -17,6 +17,7 @@ export type Database = {
       item_requests: {
         Row: {
           area: string | null
+          author_name: string | null
           created_at: string
           details: string | null
           id: string
@@ -27,6 +28,7 @@ export type Database = {
         }
         Insert: {
           area?: string | null
+          author_name?: string | null
           created_at?: string
           details?: string | null
           id?: string
@@ -37,6 +39,7 @@ export type Database = {
         }
         Update: {
           area?: string | null
+          author_name?: string | null
           created_at?: string
           details?: string | null
           id?: string
@@ -73,6 +76,7 @@ export type Database = {
       }
       request_replies: {
         Row: {
+          author_name: string | null
           created_at: string
           id: string
           message: string
@@ -82,6 +86,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          author_name?: string | null
           created_at?: string
           id?: string
           message: string
@@ -91,6 +96,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          author_name?: string | null
           created_at?: string
           id?: string
           message?: string

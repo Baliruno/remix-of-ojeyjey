@@ -64,6 +64,16 @@ function ManageGoodsPage() {
       toast.error("Give the item a name");
       return;
     }
+    if (imageFile) {
+      if (!imageFile.type.startsWith("image/")) {
+        toast.error("Photo must be an image file");
+        return;
+      }
+      if (imageFile.size > 5 * 1024 * 1024) {
+        toast.error("Photo must be under 5 MB");
+        return;
+      }
+    }
     setBusy(true);
     try {
       let imagePath = "";

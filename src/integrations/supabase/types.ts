@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      item_requests: {
+        Row: {
+          area: string | null
+          author_name: string | null
+          created_at: string
+          details: string | null
+          id: string
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          area?: string | null
+          author_name?: string | null
+          created_at?: string
+          details?: string | null
+          id?: string
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          area?: string | null
+          author_name?: string | null
+          created_at?: string
+          details?: string | null
+          id?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -37,6 +73,54 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      request_replies: {
+        Row: {
+          author_name: string | null
+          created_at: string
+          id: string
+          message: string
+          price: number | null
+          request_id: string
+          shop_id: string | null
+          user_id: string
+        }
+        Insert: {
+          author_name?: string | null
+          created_at?: string
+          id?: string
+          message: string
+          price?: number | null
+          request_id: string
+          shop_id?: string | null
+          user_id: string
+        }
+        Update: {
+          author_name?: string | null
+          created_at?: string
+          id?: string
+          message?: string
+          price?: number | null
+          request_id?: string
+          shop_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "request_replies_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "item_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "request_replies_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       shop_goods: {
         Row: {

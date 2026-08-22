@@ -1,0 +1,14 @@
+{
+  "name": "Kampala City Live",
+  "short_name": "Kampala City",
+  "description": "Kampala buildings, shops, goods and orders in one live marketplace.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f4f0",
+  "theme_color": "#001830",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

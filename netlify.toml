@@ -1,0 +1,11 @@
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Nitro's netlify preset generates the SSR function here; Netlify picks it up
+# automatically, but declare it so the deploy never falls back to static-only.
+[functions]
+  directory = ".netlify/functions-internal"

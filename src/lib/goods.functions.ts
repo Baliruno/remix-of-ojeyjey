@@ -113,3 +113,37 @@ export const deleteGood = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+export const listAllGoods = createServerFn({ method: "GET" }).handler(async () => {
+  const { createPublicSupabase, signGoodsImages } = await import("./supabase-public.server");
+  const client = createPublicSupabase();
+  const { data: rows, error } = await client
+    .from("shop_goods")
+    .select(
+      "id, name, price, unit, category, description, in_stock, image_url, created_at, shop_id, shops(name, building_name, floor, unit, phone)",
+    )
+    .order("created_at", { ascending: false })
+    .limit(200);
+  if (error) throw new Error(error.message);
+  const list = (rows ?? []) as Array<Record<string, any>>;
+  const signed = await signGoodsImages(
+    client,
+    list.map((r) => r["image_url"]).filter((v): v is string => typeof v === "string" && !!v),
+  );
+  return list.map((r) => ({
+    id: r["id"] as string,
+    shop_id: r["shop_id"] as string,
+    name: r["name"] as string,
+    price: (r["price"] ?? null) as number | null,
+    unit: (r["unit"] ?? null) as string | null,
+    category: (r["category"] ?? null) as string | null,
+    description: (r["description"] ?? null) as string | null,
+    in_stock: Boolean(r["in_stock"]),
+    image_url: typeof r["image_url"] === "string" ? (signed[r["image_url"]] ?? null) : null,
+    shop_name: (r["shops"]?.["name"] ?? "Shop") as string,
+    building_name: (r["shops"]?.["building_name"] ?? "") as string,
+    shop_floor: (r["shops"]?.["floor"] ?? null) as string | null,
+    shop_unit: (r["shops"]?.["unit"] ?? null) as string | null,
+    shop_phone: (r["shops"]?.["phone"] ?? null) as string | null,
+  }));
+});
